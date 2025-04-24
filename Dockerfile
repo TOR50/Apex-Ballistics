@@ -27,7 +27,7 @@ WORKDIR /var/www/html
 COPY . /var/www/html
 
 # Install dependencies
-RUN composer install --optimize-autoloader
+RUN composer install --no-dev --optimize-autoloader
 
 # Set correct permissions
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache

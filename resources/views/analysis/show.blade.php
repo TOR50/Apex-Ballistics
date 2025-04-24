@@ -95,7 +95,7 @@
             const flag = !isFlagged;
             const reason = flag ? prompt("Reason for flagging:") : ''; // Simple prompt, use modal in real app
 
-            if (flag && reason === null) return; // Cancelled prompt
+            if (flag && reason === null) return; // Cancelled prompt change here
 
             fetch('{{ route("analysis.flag", $analysis->id) }}', {
                 method: 'POST',

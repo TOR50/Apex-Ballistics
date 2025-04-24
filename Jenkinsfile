@@ -36,8 +36,8 @@ pipeline {
         
      stage('Test') {
     steps {
-        // Mount only test directories, not overriding vendor
-        bat 'docker run --rm -v "%WORKSPACE%/tests:/var/www/html/tests" --entrypoint php %DOCKER_IMAGE_NAME%:%DOCKER_IMAGE_TAG% artisan test'
+        // Use PHPUnit directly instead of artisan test
+        bat 'docker run --rm --entrypoint ./vendor/bin/phpunit %DOCKER_IMAGE_NAME%:%DOCKER_IMAGE_TAG%'
     }
 }
         

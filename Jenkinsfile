@@ -34,13 +34,12 @@ pipeline {
             }
         }
         
-        stage('Test') {
+     stage('Test') {
     steps {
-        // Run tests using the container's built-in files instead of mounting the workspace
-        bat 'docker run --rm --entrypoint php %DOCKER_IMAGE_NAME%:%DOCKER_IMAGE_TAG% artisan test'
+        // Mount only test directories, not overriding vendor
+        bat 'docker run --rm -v "%WORKSPACE%/tests:/var/www/html/tests" --entrypoint php %DOCKER_IMAGE_NAME%:%DOCKER_IMAGE_TAG% artisan test'
     }
-    }
-    
+}
         
         stage('Push to Docker Hub') {
             steps {

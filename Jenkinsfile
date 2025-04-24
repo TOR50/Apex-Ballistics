@@ -34,10 +34,13 @@ pipeline {
             }
         }
         
-     stage('Test') {
+    stage('Test') {
     steps {
-        // Use PHPUnit directly instead of artisan test
-        bat 'docker run --rm --entrypoint ./vendor/bin/phpunit %DOCKER_IMAGE_NAME%:%DOCKER_IMAGE_TAG%'
+        // Build a test image with dev dependencies
+        bat "docker build -t %DOCKER_IMAGE_NAME%:%DOCKER_IMAGE_TAG%-test -f Dockerfile.test ."
+        
+        // Run tests using this image
+        bat 'docker run --rm --entrypoint ./vendor/bin/phpunit %DOCKER_IMAGE_NAME%:%DOCKER_IMAGE_TAG%-test'
     }
 }
         

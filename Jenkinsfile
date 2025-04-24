@@ -35,11 +35,12 @@ pipeline {
         }
         
         stage('Test') {
-            steps {
-                // Run tests inside a temporary container
-                bat 'docker run --rm -v "%WORKSPACE%:/var/www/html" --entrypoint php %DOCKER_IMAGE_NAME%:%DOCKER_IMAGE_TAG% artisan test'
-            }
-        }
+    steps {
+        // Install dependencies before testing
+        bat 'docker run --rm -v "%WORKSPACE%:/var/www/html" --entrypoint composer %DOCKER_IMAGE_NAME%:%DOCKER_IMAGE_TAG% install'
+        bat 'docker run --rm -v "%WORKSPACE%:/var/www/html" --entrypoint php %DOCKER_IMAGE_NAME%:%DOCKER_IMAGE_TAG% artisan test'
+    }
+}
         
         stage('Push to Docker Hub') {
             steps {

@@ -34,6 +34,12 @@ pipeline {
             }
         }
         
+        stage('Test') {
+    steps {
+        // Run tests using the container's built-in files instead of mounting the workspace
+        bat 'docker run --rm --entrypoint php %DOCKER_IMAGE_NAME%:%DOCKER_IMAGE_TAG% artisan test'
+    }
+    }
     
         
         stage('Push to Docker Hub') {

@@ -8,7 +8,7 @@ class BallisticsController extends Controller
 {
     public function index()
     {
-        return view('welcome'); // Replace with a dedicated view for the tool later
+        return view('ballistics.home'); // Using the new ballistics-specific home view
     }
 
     public function analyze(Request $request)
@@ -16,5 +16,21 @@ class BallisticsController extends Controller
         // Placeholder logic for ballistics analysis
         $data = $request->all();
         return response()->json(['message' => 'Analysis complete', 'data' => $data]);
+    }
+
+    /**
+     * Show the ballistics calculator view.
+     */
+    public function calculator()
+    {
+        return view('ballistics.calculator');
+    }
+    
+    /**
+     * Show the load data view.
+     */
+    public function loadData()
+    {
+        return view('ballistics.load-data');
     }
 }

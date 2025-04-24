@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: apex-ballistics
+    container_name: apex-app
+    restart: unless-stopped
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - "8000:80"
+    networks:
+      - apex-network
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    container_name: apex-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: apex_db
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_PASSWORD: password
+      MYSQL_USER: apex_user
+    volumes:
+      - dbdata:/var/lib/mysql
+    networks:
+      - apex-network
+
+networks:
+  apex-network:
+    driver: bridge
+
+volumes:
+  dbdata:

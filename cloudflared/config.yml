@@ -1,0 +1,12 @@
+# Cloudflared tunnel configuration for Jenkins
+tunnel: your-tunnel-id-here
+credentials-file: /path/to/your/tunnel-credentials.json
+
+# Ingress rules
+ingress:
+  # Route traffic to your local Jenkins instance
+  - hostname: jenkins.yourdomain.com
+    service: http://localhost:8080
+  
+  # Default catch-all rule
+  - service: http_status:404
